@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="900" viewBox="0 0 1240 900" role="img" aria-labelledby="title desc">
+  <title id="title">Warehouse digital twin — simplified</title>
+  <desc id="desc">A simple isometric warehouse with a navy roof, white walls, orange shelves and a yellow forklift on the left; a navy blueprint with cyan outlines on the right.</desc>
+  <defs>
+    <clipPath id="left"><path d="M0 0H620V900H0Z"/></clipPath>
+    <clipPath id="right"><path d="M620 0H1240V900H620Z"/></clipPath>
+    <filter id="glow" filterUnits="userSpaceOnUse" x="590" y="40" width="60" height="770">
+      <feGaussianBlur stdDeviation="5"/>
+    </filter>
+    <!-- One simple loading bay, reused twice. Local coordinates are wall units. -->
+    <g id="bay">
+      <rect width="170" height="178" fill="#354b5c"/>
+      <g fill="#cca16d">
+        <rect x="16" y="16" width="61" height="49"/>
+        <rect x="90" y="16" width="62" height="49"/>
+        <rect x="16" y="91" width="61" height="48"/>
+        <rect x="90" y="91" width="62" height="48"/>
+      </g>
+      <path d="M8 5V158M161 5V158M8 10H161M8 85H161M8 158H161" fill="none" stroke="#ed913f" stroke-width="6"/>
+      <path d="M-3 0V182H173V0" fill="none" stroke="#c8d3dd" stroke-width="5"/>
+    </g>
+    <!-- Sparse isometric shelf: two tiers and four cartons. -->
+    <g id="wire-shelf" fill="none" stroke="#7bdcff" stroke-width="1.8" stroke-linejoin="round">
+      <path d="M0 0V-145L40-165L160-105V40L120 60V-85L0-145M120-85L160-105M0 0L120 60M0-70L120-10L160-30M40-165V-20"/>
+      <path d="M12-77V-118L49-100V-59ZM69-49V-90L106-72V-31ZM12-8V-49L49-31V10ZM69 20V-21L106-3V38Z"/>
+    </g>
+  </defs>
+  <rect width="1240" height="900" fill="white"/>
+
+  <!-- Physical warehouse: flat colors and large, clean shapes. -->
+  <g clip-path="url(#left)" stroke-linejoin="round">
+    <path d="M148 548L620 784L1092 548L620 312Z" fill="#e9eef2"/>
+    <path d="M188 576V296L404 334L620 512V742Z" fill="#f5f7f9" stroke="#cbd5de" stroke-width="2"/>
+    <path d="M188 296L620 80L836 118L404 334Z" fill="#234361"/>
+    <path d="M404 334L836 118L1052 296L620 512Z" fill="#142f4d"/>
+    <path d="M188 296L404 334L620 512" fill="none" stroke="#56718a" stroke-width="3"/>
+    <g transform="matrix(.9 .45 0 -1 188 576)">
+      <use href="#bay" x="40"/>
+      <use href="#bay" x="260"/>
+    </g>
+    <!-- Minimal forklift silhouette. -->
+    <g transform="translate(262 581)" stroke-linejoin="round">
+      <ellipse cx="-4" cy="91" rx="10" ry="14" fill="#293d4c"/>
+      <ellipse cx="53" cy="118" rx="10" ry="14" fill="#293d4c"/>
+      <path d="M-15 48L20 31L79 60L44 78Z" fill="#ffdb55"/>
+      <path d="M-15 48V85L44 115V78Z" fill="#f2c12d"/>
+      <path d="M44 78L79 60V97L44 115Z" fill="#ce9b19"/>
+      <path d="M11 55V-3M61 77V21" stroke="#344c60" stroke-width="5"/>
+      <path d="M0-8L28-22L82 5L54 19Z" fill="#ffd64a"/>
+      <path d="M26 47V31L43 39V55Z" fill="#344c60"/>
+      <path d="M80 8V114L112 130M62 17V123L94 139" fill="none" stroke="#344c60" stroke-width="5"/>
+    </g>
+  </g>
+
+  <!-- Blueprint warehouse: translucent surfaces and only essential outlines. -->
+  <g clip-path="url(#right)" stroke="#70d7fc" stroke-linejoin="round">
+    <path d="M148 548L620 784L1092 548L620 312Z" fill="#163a60" stroke="none"/>
+    <path d="M620 80L836 118L1052 296V526L620 742L188 526V296Z" fill="#123458" fill-opacity=".95" stroke-width="2"/>
+    <path d="M188 296L620 80L836 118L404 334Z" fill="#275479" fill-opacity=".4" stroke-width="1.5"/>
+    <path d="M404 334L836 118L1052 296L620 512Z" fill="#225178" fill-opacity=".35" stroke-width="1.5"/>
+    <path d="M620 512L1052 296M620 742L1052 526M836 404V634" fill="none" stroke-width="1.5" opacity=".65"/>
+    <path d="M620 188L728 172L944 350" fill="none" stroke-width="1.2" opacity=".55"/>
+    <use href="#wire-shelf" transform="translate(848 497)"/>
+    <use href="#wire-shelf" transform="translate(679 581)"/>
+    <!-- One simplified conveyor. -->
+    <g fill="none" stroke-width="1.7">
+      <path d="M879 567L960 526L986 539L905 580ZM879 567V593M905 580V606M986 539V565"/>
+      <path d="M899 557L925 570M919 547L945 560M939 537L965 550" opacity=".65"/>
+    </g>
+  </g>
+
+  <!-- Central cyan divider. -->
+  <path d="M620 68V788" stroke="#20dfff" stroke-width="13" opacity=".6" filter="url(#glow)"/>
+  <path d="M620 68V788" stroke="#28ddfa" stroke-width="4"/>
+  <path d="M620 68V788" stroke="#ddffff" stroke-width="1.4"/>
+</svg>

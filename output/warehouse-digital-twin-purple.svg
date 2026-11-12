@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="800" height="800" viewBox="0 0 800 800"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Warehouse digital twin</title>
+  <desc id="desc">An isometric warehouse divided into a solid purple physical
+    half and a matching purple wireframe half, each containing a sparse rack.</desc>
+
+  <defs>
+    <!-- Shared geometry keeps the physical and digital halves aligned. -->
+    <path id="roof" d="M400 180 190 300 400 420Z"/>
+    <path id="wall" d="M190 300V510L400 630V420Z"/>
+    <path id="opening" d="M220 357 370 443V583L220 497Z"/>
+    <g id="rack" transform="matrix(1 .571429 0 1 232 370)">
+      <path d="M0 0V120M126 0V120M0 4H126M0 60H126M0 116H126"/>
+    </g>
+    <g id="cartons" transform="matrix(1 .571429 0 1 232 370)">
+      <path d="M14 24H62V60H14ZM64 80H112V116H64Z"/>
+    </g>
+  </defs>
+
+  <g stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+    <!-- Physical half: solid roof, wall, and stored cartons. -->
+    <g stroke="#2E224C">
+      <use href="#wall" fill="#F3EDF9"/>
+      <use href="#roof" fill="#2E224C"/>
+      <use href="#opening" fill="#FFFFFF"/>
+      <use href="#cartons" fill="#6A0DAD" stroke="#6A0DAD"/>
+      <use href="#rack" fill="none"/>
+    </g>
+
+    <!-- Digital half: the same geometry reflected across the divider. -->
+    <g transform="translate(800 0) scale(-1 1)"
+       fill="none" stroke="#6A0DAD">
+      <use href="#wall"/>
+      <use href="#roof"/>
+      <use href="#opening"/>
+      <use href="#cartons"/>
+      <use href="#rack"/>
+    </g>
+
+    <!-- The shared vertical axis joins both versions of the warehouse. -->
+    <path d="M400 166V644" fill="none" stroke="#2E224C" stroke-width="9"/>
+  </g>
+</svg>
