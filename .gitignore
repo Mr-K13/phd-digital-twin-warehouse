@@ -5,3 +5,4 @@ __pycache__
 .journal-rank-cache
 tmp
 source
+zotero_rank_tag_report.csv
