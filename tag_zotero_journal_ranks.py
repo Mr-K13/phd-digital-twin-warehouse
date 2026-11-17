@@ -48,6 +48,15 @@ def is_paper_item(data: dict[str, Any]) -> bool:
     return str(data.get("itemType", "")) not in NON_PAPER_TYPES
 
 
+def rank_tag_value(result: jrl.Result) -> str:
+    """Map a lookup result to Q1-Q4, NA, or no tag for transient failures."""
+    if re.fullmatch(r"Q[1-4]", result.quartile or "", flags=re.IGNORECASE):
+        return result.quartile.upper()
+    if result.status in {"not_found", "unranked"}:
+        return "NA"
+    return ""
+
+
 def matching_additional_tags(
     data: dict[str, Any], requested: list[str]
 ) -> list[str]:
@@ -112,6 +121,11 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument(
+        "--recheck-ranks",
+        action="store_true",
+        help="Recheck and replace existing Rank: tags; default is to skip them",
+    )
+    parser.add_argument(
         "--report",
         type=Path,
         default=Path(__file__).resolve().parent / "zotero_rank_tag_report.csv",
@@ -165,7 +179,8 @@ def main(argv: Optional[list[str]] = None) -> int:
         new_tags = merge_tags(original_tags, matched_tags)
         notes: list[str] = []
         rank_missing = not has_rank_tag(original_tags)
-        if rank_missing:
+        rank_needed = rank_missing or args.recheck_ranks
+        if rank_needed:
             if not doi:
                 notes.append("No DOI available for journal-rank lookup")
             else:
@@ -180,12 +195,15 @@ def main(argv: Optional[list[str]] = None) -> int:
                         elsevier_api_key=None,
                     )
                     journal = result.journal or journal
-                    quartile = result.quartile
-                    if re.fullmatch(r"Q[1-4]", quartile or ""):
-                        new_tags = merge_rank_tag(new_tags, quartile)
+                    rank_value = rank_tag_value(result)
+                    quartile = rank_value
+                    if rank_value:
+                        new_tags = merge_rank_tag(new_tags, rank_value)
+                        if rank_value == "NA":
+                            notes.append(result.message)
                     else:
                         notes.append(
-                            result.message or "No Q1-Q4 SCImago quartile found"
+                            result.message or "Journal-rank lookup did not resolve"
                         )
                 except Exception as exc:
                     failures += 1
@@ -212,7 +230,7 @@ def main(argv: Optional[list[str]] = None) -> int:
                 failures += 1
                 action = "Failed"
                 notes.append(str(exc))
-        elif rank_missing and notes:
+        elif rank_needed and notes:
             action = "Skipped"
         message = "; ".join(notes)
 

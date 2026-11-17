@@ -70,6 +70,12 @@ class ZoteroImporterTests(unittest.TestCase):
             [{"tag": "Digital Twin"}, {"tag": "Rank:Q1"}],
         )
 
+    def test_rank_tag_accepts_na(self):
+        self.assertEqual(
+            zri.merge_rank_tag([{"tag": "Digital Twin"}], "NA"),
+            [{"tag": "Digital Twin"}, {"tag": "Rank:NA"}],
+        )
+
     def test_clean_crossref_jats_abstract(self):
         source = "<jats:p>A &amp; B <jats:bold>digital twin</jats:bold>.</jats:p>"
         self.assertEqual(zri.clean_abstract(source), "A & B digital twin.")

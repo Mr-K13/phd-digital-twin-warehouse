@@ -387,8 +387,8 @@ def merge_tags(
 def merge_rank_tag(
     existing: list[dict[str, Any]], quartile: str
 ) -> list[dict[str, Any]]:
-    """Replace an existing Rank tag when a Q1-Q4 result is available."""
-    if not re.fullmatch(r"Q[1-4]", quartile or "", flags=re.IGNORECASE):
+    """Replace an existing Rank tag when a Q1-Q4 or NA result is available."""
+    if not re.fullmatch(r"Q[1-4]|NA", quartile or "", flags=re.IGNORECASE):
         return [dict(tag) for tag in (existing or [])]
     merged = [
         dict(tag)
